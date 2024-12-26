@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Courses</title>
+  </head>
+  <body>
+    <% if (it?.errors?.name?._errors) { %>
+      <p>Course name errors:</p>
+      <ul>
+        <% it?.errors?.name?._errors.forEach((error) => { %>
+        <li><%= error %></li>
+        <% }); %>
+      </ul>
+    <% } %>
+    <p>Add a course:</p>
+    <form method="POST" action="/courses">
+      <label for="name">Course name:</label>
+      <input type="text" id="name" name="name" value="<%= it?.name ?? '' %>" /><br/>
+      <input type="submit" value="Add" />
+    </form>
+    <p>Existing courses:</p>
+    <ul>
+    <% it.courses.forEach((course) => { %>
+      <li>
+        <a href="/courses/<%= course.id %>"><%= course.name %></a>
+        <form method="POST" action="/courses/<%= course.id %>/delete">
+          <input type="submit" value="Delete" />
+        </form>
+      </li>
+    <% }); %>
+    </ul>
+  </body>
+</html>
